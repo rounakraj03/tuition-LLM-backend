@@ -1,0 +1,21 @@
+Done:
+𝘈𝘭𝘴𝘰 𝘊𝘳𝘦𝘢𝘵𝘦 𝘢𝘭𝘭 𝘰𝘵𝘩𝘦𝘳 𝘵𝘦𝘢𝘤𝘩𝘦𝘳 𝘈𝘗𝘐'𝘴 𝘭𝘪𝘬𝘦 𝘐 𝘮𝘢𝘥𝘦 𝘪𝘯 𝘴𝘵𝘶𝘥𝘦𝘯𝘵
+
+
+Todos:
+// modify api something like that in profile I would be able to get Info about 
+if I am student get student data ...
+if I am a teacher get my teacher data...
+if I am an admin ...get a staff list??(maybe) like... A list of all Students and A list of teachers.
+
+𝐂𝐫𝐞𝐚𝐭𝐞𝐝 𝐧𝐞𝐰 𝐀𝐏𝐈 𝐉𝐮𝐬𝐭 𝐢𝐦𝐩𝐥𝐞𝐦𝐞𝐧𝐭 𝐭𝐡𝐢𝐬 𝐨𝐧 𝐭𝐡𝐞 𝐚𝐩𝐩.
+
+
+Add add teacher which will be copy of add Student or maybe use same Page mostly with few Changes.
+(Option Only Avialable for admin)
+
+
+// in dashboard api for student...
+do something about notice_table 
+as it is currently searching with student_id
+

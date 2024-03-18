@@ -1,0 +1,178 @@
+CREATE TABLE batch (
+    batch_id INT AUTO_INCREMENT PRIMARY KEY,
+    batch_name VARCHAR(50) UNIQUE NOT NULL,
+    subject_name VARCHAR(50) NOT NULL,
+    start_date DATE NOT NULL,
+    fees DECIMAL(10, 2) NOT NULL,
+    batch_start_timing TIME NOT NULL,
+    batch_end_timing TIME NOT NULL,
+    is_monday BOOLEAN NOT NULL,
+    is_tuesday BOOLEAN NOT NULL,
+    is_wednesday BOOLEAN NOT NULL,
+    is_thursday BOOLEAN NOT NULL,
+    is_friday BOOLEAN NOT NULL,
+    is_saturday BOOLEAN NOT NULL,
+    is_sunday BOOLEAN NOT NULL
+);
+
+
+CREATE TABLE students (
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
+    student_name VARCHAR(100) NOT NULL,
+    father_name VARCHAR(100) NOT NULL,
+    mother_name VARCHAR(100) NOT NULL,
+    student_phone_number VARCHAR(20) NOT NULL,
+    parent_phone_number VARCHAR(20) NOT NULL,
+    admission_date DATE NOT NULL,
+    student_image_path TEXT,
+    storage_key TEXT NOT NULL
+);
+
+
+CREATE TABLE student_batches (
+    student_id INT,
+    batch_id INT,
+    PRIMARY KEY (student_id, batch_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (batch_id) REFERENCES batch(batch_id)
+);
+
+
+CREATE TABLE tests_details (
+    test_id INT AUTO_INCREMENT PRIMARY KEY,
+    batch_id INT NOT NULL,
+    test_date DATE NOT NULL,
+    test_name VARCHAR(255) NOT NULL,
+    test_description TEXT,
+    max_marks INT NOT NULL
+);
+
+CREATE TABLE attendance (
+    attendance_id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    batch_id INT NOT NULL,
+    attendance_date DATE NOT NULL,
+    is_present BOOLEAN NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (batch_id) REFERENCES batch(batch_id),
+    UNIQUE KEY unique_attendance (attendance_date, batch_id, student_id)
+);
+
+
+CREATE TABLE student_marks (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ batch_id INT,
+ student_id INT,
+ test_id INT,
+ marks_obtained DECIMAL(10, 2), -- 10 total digits with 2 decimal places
+ FOREIGN KEY (batch_id) REFERENCES batch(batch_id),
+ FOREIGN KEY (student_id) REFERENCES students(student_id),
+ FOREIGN KEY (test_id) REFERENCES tests_details(test_id),
+ UNIQUE KEY unique_attendance (batch_id, student_id, test_id)
+);
+
+CREATE TABLE homework (
+    homework_id INT NOT NULL AUTO_INCREMENT,
+    batch_id INT NOT NULL,
+    homework_date DATE NOT NULL,
+    homework_title VARCHAR(255) NOT NULL,
+    homework_description TEXT,
+    issue_date DATE NOT NULL,
+    submission_date DATE,
+    duration INT GENERATED ALWAYS AS (DATEDIFF(submission_date, issue_date)) VIRTUAL,
+    PRIMARY KEY (homework_id)
+);
+
+
+
+
+CREATE TABLE study_materials (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    file_name TEXT NOT NULL,
+    path_to_show_in_app TEXT NOT NULL,
+    storage_path TEXT NOT NULL,
+    storage_key TEXT NOT NULL,
+    UNIQUE KEY unique_file_and_path (file_name(191), path_to_show_in_app(191))
+);
+
+
+CREATE TABLE user_fcm_token (
+phone_number VARCHAR(20) PRIMARY KEY,
+fcm_token VARCHAR(300) NOT NULL
+);
+
+
+CREATE TABLE phone_number_student_table(
+phone_number VARCHAR(20) PRIMARY KEY,
+student_id INT,
+FOREIGN KEY (student_id) REFERENCES students(student_id)
+);
+
+
+ 
+ CREATE TABLE notice_table (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  message TEXT NOT NULL,
+  notice_date DATE NOT NULL,
+  student_ids TEXT
+ );
+ 
+ 
+ 
+ CREATE TABLE teachers (
+    teacher_id INT AUTO_INCREMENT PRIMARY KEY,
+    teacher_name VARCHAR(100) NOT NULL,
+    teacher_phone_number VARCHAR(20) NOT NULL,
+    admission_date DATE NOT NULL,
+    student_image_path TEXT,
+    storage_key TEXT NOT NULL
+);
+
+
+CREATE TABLE teacher_batches (
+    teacher_id INT,
+    batch_id INT,
+    PRIMARY KEY (teacher_id, batch_id),
+    FOREIGN KEY (teacher_id) REFERENCES teachers(teacher_id),
+    FOREIGN KEY (batch_id) REFERENCES batch(batch_id)
+);
+
+
+CREATE TABLE phone_number_teacher_table(
+phone_number VARCHAR(20) PRIMARY KEY,
+teacher_id INT,
+FOREIGN KEY (teacher_id) REFERENCES teachers(teacher_id)
+);
+
+
+CREATE TABLE student_fees_notifier_table (
+    student_id INT PRIMARY KEY,
+    monthly_alert BOOLEAN DEFAULT true NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES students(student_id)
+);
+
+
+
+
+insert into user_fcm_token(phone_number,fcm_token) values ("93150450239", "abc");
+insert into user_fcm_token(phone_number,fcm_token) values ("93150450238", "abcd");
+insert into user_fcm_token(phone_number,fcm_token) values ("93150450236", "abcfw3");
+
+insert into phone_number_student_table(phone_number,student_id) values ("+919871666482", 11);
+
+
+select * from students;
+select * from student_batches;
+select * from batch;
+select * from attendance;
+select * from homework;
+select * from tests_details;
+select * from student_marks;
+select * from study_materials;
+select * from user_fcm_token;
+select * from phone_number_student_table;
+select * from notice_table;
+select * from teachers;
+select * from teacher_batches;
+select * from phone_number_teacher_table;
+select * from student_fees_notifier_table;
